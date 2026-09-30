@@ -1,1 +1,3183 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f172a">
+<title>Raport 3 Store</title>
 
+<style>
+:root{
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --text:#172033;
+  --muted:#667085;
+  --line:#e5e7eb;
+  --primary:#2563eb;
+  --primary2:#1d4ed8;
+  --danger:#dc2626;
+  --warning:#d97706;
+  --success:#16a34a;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+  border:0;
+}
+
+.app{
+  min-height:100vh;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+  background:linear-gradient(135deg,#0f172a,#1e3a8a);
+  color:#fff;
+  padding:18px 16px;
+  position:sticky;
+  top:0;
+  z-index:20;
+  box-shadow:0 4px 15px #0002;
+}
+
+.header-inner{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+}
+
+.brand h1{
+  font-size:21px;
+  margin:0;
+}
+
+.brand p{
+  margin:4px 0 0;
+  color:#cbd5e1;
+  font-size:12px;
+}
+
+.header-actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.iconbtn{
+  background:#ffffff18;
+  color:#fff;
+  border:1px solid #ffffff25;
+  padding:9px 12px;
+  border-radius:10px;
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:18px 14px 40px;
+}
+
+/* ================= NAV ================= */
+
+.nav{
+  display:flex;
+  gap:8px;
+  overflow:auto;
+  margin-bottom:18px;
+}
+
+.nav button{
+  white-space:nowrap;
+  padding:10px 14px;
+  border-radius:10px;
+  background:#fff;
+  color:#475467;
+  border:1px solid var(--line);
+}
+
+.nav button.active{
+  background:var(--primary);
+  color:#fff;
+  border-color:var(--primary);
+}
+
+/* ================= SECTION ================= */
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+.title-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:15px;
+}
+
+.title-row h2{
+  margin:0;
+  font-size:20px;
+}
+
+.subtitle{
+  color:var(--muted);
+  font-size:13px;
+  margin-top:4px;
+}
+
+/* ================= GRID ================= */
+
+.grid{
+  display:grid;
+  gap:14px;
+}
+
+.cards{
+  grid-template-columns:repeat(4,1fr);
+}
+
+.store-cards{
+  grid-template-columns:repeat(3,1fr);
+}
+
+/* ================= CARD ================= */
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px;
+  box-shadow:0 2px 8px #10182808;
+}
+
+.kpi{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+}
+
+.kpi .label{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.kpi .value{
+  font-size:28px;
+  font-weight:800;
+  margin-top:5px;
+}
+
+.kpi .ico{
+  font-size:22px;
+}
+
+.store-card h3{
+  margin:0 0 10px;
+  font-size:16px;
+}
+
+.store-stat{
+  display:flex;
+  justify-content:space-between;
+  padding:7px 0;
+  border-bottom:1px solid #f1f3f5;
+  font-size:13px;
+}
+
+.store-stat:last-child{
+  border:0;
+}
+
+.num{
+  font-weight:800;
+}
+
+/* ================= BUTTON ================= */
+
+.btn{
+  padding:10px 14px;
+  border-radius:10px;
+  font-weight:700;
+}
+
+.btn-primary{
+  background:var(--primary);
+  color:#fff;
+}
+
+.btn-primary:hover{
+  background:var(--primary2);
+}
+
+.btn-light{
+  background:#fff;
+  color:#344054;
+  border:1px solid var(--line);
+}
+
+.btn-danger{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+.btn-success{
+  background:#dcfce7;
+  color:#166534;
+}
+
+/* ================= FILTER ================= */
+
+.filters{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.filters>*{
+  min-width:150px;
+  flex:1;
+}
+
+/* ================= FORM ================= */
+
+input,
+select,
+textarea{
+  width:100%;
+  padding:10px 11px;
+  border:1px solid #d0d5dd;
+  border-radius:9px;
+  background:#fff;
+  color:var(--text);
+  outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px #2563eb16;
+}
+
+textarea{
+  min-height:80px;
+  resize:vertical;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.field label{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  color:#475467;
+  margin-bottom:5px;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0f172a88;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:14px;
+  z-index:50;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:min(700px,100%);
+  max-height:92vh;
+  overflow:auto;
+  background:#fff;
+  border-radius:18px;
+  padding:18px;
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.modal-head h3{
+  margin:0;
+}
+
+.close{
+  background:#f2f4f7;
+  border-radius:50%;
+  width:34px;
+  height:34px;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrap{
+  overflow:auto;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:15px;
+}
+
+.table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:850px;
+}
+
+.table th,
+.table td{
+  padding:11px 10px;
+  border-bottom:1px solid #edf0f3;
+  text-align:left;
+  font-size:12px;
+  vertical-align:top;
+}
+
+.table th{
+  background:#f8fafc;
+  color:#475467;
+  position:sticky;
+  top:0;
+  z-index:1;
+}
+
+.table tr:last-child td{
+  border-bottom:0;
+}
+
+.finding{
+  font-weight:700;
+}
+
+.small{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+/* ================= BADGE ================= */
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.critical{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+.high{
+  background:#ffedd5;
+  color:#c2410c;
+}
+
+.medium{
+  background:#fef3c7;
+  color:#a16207;
+}
+
+.low{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.open{
+  background:#eef2ff;
+  color:#4338ca;
+}
+
+.progress{
+  background:#e0f2fe;
+  color:#0369a1;
+}
+
+.closed{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.overdue{
+  background:#fce7f3;
+  color:#be185d;
+}
+
+/* ================= PROGRESS ================= */
+
+.progressbar{
+  height:8px;
+  background:#e5e7eb;
+  border-radius:99px;
+  overflow:hidden;
+  margin-top:8px;
+}
+
+.progressbar span{
+  display:block;
+  height:100%;
+  background:var(--primary);
+  border-radius:99px;
+}
+
+/* ================= ALERT ================= */
+
+.alert{
+  padding:12px 14px;
+  border-radius:12px;
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#9a3412;
+  font-size:13px;
+  margin-bottom:14px;
+}
+
+.empty{
+  text-align:center;
+  padding:35px;
+  color:var(--muted);
+}
+
+.actions{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.action-btn{
+  padding:7px 9px;
+  border-radius:8px;
+  background:#f2f4f7;
+  color:#344054;
+  font-size:11px;
+  font-weight:700;
+}
+
+.action-btn.delete{
+  color:#b91c1c;
+  background:#fee2e2;
+}
+
+/* ================= STORE FILTER ================= */
+
+.store-filter{
+  display:flex;
+  gap:8px;
+  margin-bottom:14px;
+}
+
+.store-filter button{
+  flex:1;
+  background:#fff;
+  border:1px solid var(--line);
+  padding:10px;
+  border-radius:10px;
+  font-weight:700;
+  color:#475467;
+}
+
+.store-filter button.active{
+  background:#eff6ff;
+  border-color:#93c5fd;
+  color:#1d4ed8;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:800px){
+
+  .cards{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .store-cards{
+    grid-template-columns:1fr;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+
+  .header-inner{
+    align-items:flex-start;
+  }
+
+  .header-actions{
+    justify-content:flex-end;
+  }
+
+}
+
+@media(max-width:480px){
+
+  .container{
+    padding:14px 10px 30px;
+  }
+
+  .cards{
+    gap:9px;
+  }
+
+  .card{
+    padding:13px;
+  }
+
+  .kpi .value{
+    font-size:24px;
+  }
+
+  .title-row{
+    align-items:flex-start;
+  }
+
+  .title-row .btn{
+    white-space:nowrap;
+  }
+
+  .header{
+    padding:14px 11px;
+  }
+
+  .brand h1{
+    font-size:18px;
+  }
+
+  .iconbtn{
+    padding:8px 9px;
+  }
+
+  .nav{
+    margin-bottom:13px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+  <div class="header-inner">
+
+    <div class="brand">
+
+      <h1>📊 RAPORT 3 STORE</h1>
+
+      <p>
+        Monitoring kekurangan • prioritas • target penyelesaian
+      </p>
+
+    </div>
+
+    <div class="header-actions">
+
+      <button
+        class="iconbtn"
+        onclick="exportData()">
+        ⬇ Backup
+      </button>
+
+      <button
+        class="iconbtn"
+        onclick="document.getElementById('importFile').click()">
+        ⬆ Restore
+      </button>
+
+      <input
+        id="importFile"
+        type="file"
+        accept=".json"
+        style="display:none"
+        onchange="importData(event)">
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<main class="container">
+
+<!-- ================= NAVIGATION ================= -->
+
+<nav class="nav">
+
+  <button
+    class="active"
+    data-tab="dashboard">
+
+    🏠 Dashboard
+
+  </button>
+
+  <button
+    data-tab="findings">
+
+    📋 Temuan
+
+  </button>
+
+  <button
+    data-tab="priority">
+
+    🎯 Prioritas
+
+  </button>
+
+  <button
+    data-tab="settings">
+
+    ⚙️ Setting
+
+  </button>
+
+</nav>
+
+
+<!-- ================================================= -->
+<!-- ================= DASHBOARD ====================== -->
+<!-- ================================================= -->
+
+<section
+  id="dashboard"
+  class="section active">
+
+  <div class="title-row">
+
+    <div>
+
+      <h2>
+        Dashboard Raport
+      </h2>
+
+      <div class="subtitle">
+        Ringkasan kondisi 3 store
+      </div>
+
+    </div>
+
+    <button
+      class="btn btn-primary"
+      onclick="openModal()">
+
+      ＋ Tambah Temuan
+
+    </button>
+
+  </div>
+
+
+  <!-- KPI -->
+
+  <div
+    class="grid cards"
+    id="kpis">
+  </div>
+
+
+  <!-- OVERDUE -->
+
+  <div id="overdueAlert">
+  </div>
+
+
+  <!-- OVERALL PROGRESS -->
+
+  <div
+    class="card"
+    style="margin-bottom:14px">
+
+    <h3 style="margin:0 0 14px">
+      Progress Penyelesaian
+    </h3>
+
+    <div id="overallProgress">
+    </div>
+
+  </div>
+
+
+  <!-- STORE CARDS -->
+
+  <div
+    class="grid store-cards"
+    id="storeCards">
+
+  </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- ================= TEMUAN ======================== -->
+<!-- ================================================= -->
+
+<section
+  id="findings"
+  class="section">
+
+  <div class="title-row">
+
+    <div>
+
+      <h2>
+        Daftar Temuan
+      </h2>
+
+      <div class="subtitle">
+        Semua kekurangan yang perlu ditindaklanjuti
+      </div>
+
+    </div>
+
+    <button
+      class="btn btn-primary"
+      onclick="openModal()">
+
+      ＋ Temuan
+
+    </button>
+
+  </div>
+
+
+  <!-- FILTER -->
+
+  <div class="filters">
+
+    <select
+      id="filterStore"
+      onchange="renderFindings()">
+
+      <option value="">
+        Semua Store
+      </option>
+
+    </select>
+
+
+    <select
+      id="filterPriority"
+      onchange="renderFindings()">
+
+      <option value="">
+        Semua Prioritas
+      </option>
+
+      <option>
+        Critical
+      </option>
+
+      <option>
+        High
+      </option>
+
+      <option>
+        Medium
+      </option>
+
+      <option>
+        Low
+      </option>
+
+    </select>
+
+
+    <select
+      id="filterStatus"
+      onchange="renderFindings()">
+
+      <option value="">
+        Semua Status
+      </option>
+
+      <option>
+        Open
+      </option>
+
+      <option>
+        On Progress
+      </option>
+
+      <option>
+        Closed
+      </option>
+
+    </select>
+
+
+    <input
+      id="filterSearch"
+      oninput="renderFindings()"
+      placeholder="🔎 Cari temuan / PIC / kategori...">
+
+  </div>
+
+
+  <!-- TABLE -->
+
+  <div class="table-wrap">
+
+    <table class="table">
+
+      <thead>
+
+        <tr>
+
+          <th>
+            Temuan
+          </th>
+
+          <th>
+            Store
+          </th>
+
+          <th>
+            Prioritas
+          </th>
+
+          <th>
+            Target
+          </th>
+
+          <th>
+            PIC
+          </th>
+
+          <th>
+            Status
+          </th>
+
+          <th>
+            Action
+          </th>
+
+        </tr>
+
+      </thead>
+
+      <tbody
+        id="findingTable">
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- ================= PRIORITAS ====================== -->
+<!-- ================================================= -->
+
+<section
+  id="priority"
+  class="section">
+
+  <div class="title-row">
+
+    <div>
+
+      <h2>
+        🎯 Target Prioritas
+      </h2>
+
+      <div class="subtitle">
+        Temuan diurutkan berdasarkan tingkat prioritas dan target penyelesaian
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="store-filter"
+    id="priorityStores">
+  </div>
+
+
+  <div class="table-wrap">
+
+    <table class="table">
+
+      <thead>
+
+        <tr>
+
+          <th>
+            #
+          </th>
+
+          <th>
+            Temuan
+          </th>
+
+          <th>
+            Store
+          </th>
+
+          <th>
+            Prioritas
+          </th>
+
+          <th>
+            Target
+          </th>
+
+          <th>
+            Hari
+          </th>
+
+          <th>
+            Status
+          </th>
+
+          <th>
+            Action
+          </th>
+
+        </tr>
+
+      </thead>
+
+      <tbody
+        id="priorityTable">
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</section>
+
+
+<!-- ================================================= -->
+<!-- ================= SETTING ======================== -->
+<!-- ================================================= -->
+
+<section
+  id="settings"
+  class="section">
+
+  <div class="title-row">
+
+    <div>
+
+      <h2>
+        ⚙️ Setting
+      </h2>
+
+      <div class="subtitle">
+        Atur nama 3 store dan target penyelesaian
+      </div>
+
+    </div>
+
+    <button
+      class="btn btn-primary"
+      onclick="saveSettings()">
+
+      Simpan Setting
+
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="form-grid">
+
+
+      <div class="field">
+
+        <label>
+          Store 1
+        </label>
+
+        <input
+          id="s1">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Store 2
+        </label>
+
+        <input
+          id="s2">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Store 3
+        </label>
+
+        <input
+          id="s3">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Target Critical (hari)
+        </label>
+
+        <input
+          id="tCritical"
+          type="number"
+          min="0">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Target High (hari)
+        </label>
+
+        <input
+          id="tHigh"
+          type="number"
+          min="0">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Target Medium (hari)
+        </label>
+
+        <input
+          id="tMedium"
+          type="number"
+          min="0">
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Target Low (hari)
+        </label>
+
+        <input
+          id="tLow"
+          type="number"
+          min="0">
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="card"
+    style="margin-top:14px">
+
+    <h3 style="margin-top:0">
+      Data
+    </h3>
+
+    <p
+      style="font-size:13px;color:#667085">
+
+      Data disimpan di browser perangkat ini.
+      Gunakan tombol Backup secara berkala agar data dapat dipindahkan
+      ke perangkat lain.
+
+    </p>
+
+    <button
+      class="btn btn-danger"
+      onclick="resetAll()">
+
+      Hapus Semua Data
+
+    </button>
+
+  </div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- ================= MODAL TEMUAN =================== -->
+<!-- ================================================= -->
+
+<div
+  class="modal"
+  id="modal">
+
+  <div class="modal-box">
+
+
+    <div class="modal-head">
+
+      <h3 id="modalTitle">
+        Tambah Temuan
+      </h3>
+
+      <button
+        class="close"
+        onclick="closeModal()">
+
+        ×
+
+      </button>
+
+    </div>
+
+
+    <form
+      id="findingForm"
+      onsubmit="saveFinding(event)">
+
+      <input
+        type="hidden"
+        id="editId">
+
+
+      <div class="form-grid">
+
+
+        <!-- STORE -->
+
+        <div class="field">
+
+          <label>
+            Store *
+          </label>
+
+          <select
+            id="fStore"
+            required>
+          </select>
+
+        </div>
+
+
+        <!-- DATE -->
+
+        <div class="field">
+
+          <label>
+            Tanggal Temuan *
+          </label>
+
+          <input
+            id="fDate"
+            type="date"
+            required>
+
+        </div>
+
+
+        <!-- FINDING -->
+
+        <div class="field full">
+
+          <label>
+            Temuan / Kekurangan *
+          </label>
+
+          <textarea
+            id="fFinding"
+            required
+            placeholder="Contoh: Area preparation belum sesuai standar...">
+          </textarea>
+
+        </div>
+
+
+        <!-- CATEGORY -->
+
+        <div class="field">
+
+          <label>
+            Kategori
+          </label>
+
+          <input
+            id="fCategory"
+            placeholder="Service / Product / Hygiene / Safety...">
+
+        </div>
+
+
+        <!-- PRIORITY -->
+
+        <div class="field">
+
+          <label>
+            Prioritas *
+          </label>
+
+          <select
+            id="fPriority"
+            required>
+
+            <option>
+              Critical
+            </option>
+
+            <option>
+              High
+            </option>
+
+            <option selected>
+              Medium
+            </option>
+
+            <option>
+              Low
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- PIC -->
+
+        <div class="field">
+
+          <label>
+            PIC
+          </label>
+
+          <input
+            id="fPic"
+            placeholder="Nama PIC">
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div class="field">
+
+          <label>
+            Status
+          </label>
+
+          <select
+            id="fStatus">
+
+            <option>
+              Open
+            </option>
+
+            <option>
+              On Progress
+            </option>
+
+            <option>
+              Closed
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- ROOT CAUSE -->
+
+        <div class="field full">
+
+          <label>
+            Root Cause
+          </label>
+
+          <textarea
+            id="fRoot"
+            placeholder="Penyebab utama...">
+          </textarea>
+
+        </div>
+
+
+        <!-- ACTION PLAN -->
+
+        <div class="field full">
+
+          <label>
+            Action Plan
+          </label>
+
+          <textarea
+            id="fAction"
+            placeholder="Tindakan yang harus dilakukan...">
+          </textarea>
+
+        </div>
+
+
+        <!-- CLOSED DATE -->
+
+        <div class="field">
+
+          <label>
+            Tanggal Aktual Selesai
+          </label>
+
+          <input
+            id="fClosed"
+            type="date">
+
+        </div>
+
+
+        <!-- NOTE -->
+
+        <div class="field">
+
+          <label>
+            Catatan AM
+          </label>
+
+          <input
+            id="fNote"
+            placeholder="Catatan monitoring">
+
+        </div>
+
+
+      </div>
+
+
+      <div
+        style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px">
+
+        <button
+          type="button"
+          class="btn btn-light"
+          onclick="closeModal()">
+
+          Batal
+
+        </button>
+
+        <button
+          class="btn btn-primary">
+
+          Simpan Temuan
+
+        </button>
+
+      </div>
+
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   DATABASE LOCAL
+===================================================== */
+
+const KEY = 'raport3store_v1';
+
+
+let db =
+JSON.parse(
+  localStorage.getItem(KEY) || 'null'
+) ||
+{
+
+  settings:{
+
+    stores:[
+      'SSS MENTENG',
+      'SKS CITYWALK',
+      'SS CITRA TOWER'
+    ],
+
+    targets:{
+
+      Critical:1,
+
+      High:3,
+
+      Medium:7,
+
+      Low:14
+
+    }
+
+  },
+
+  findings:[]
+
+};
+
+
+let priorityStore = '';
+
+
+/* =====================================================
+   HELPER
+===================================================== */
+
+const $ = id =>
+document.getElementById(id);
+
+
+const today = () =>
+new Date().toISOString().slice(0,10);
+
+
+function saveDB(){
+
+  localStorage.setItem(
+    KEY,
+    JSON.stringify(db)
+  );
+
+  renderAll();
+
+}
+
+
+function esc(s=''){
+
+  return String(s)
+    .replace(/[&<>"']/g,m=>({
+
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#039;'
+
+    }[m]));
+
+}
+
+
+function uid(){
+
+  return Date.now().toString(36)
+    +
+    Math.random()
+      .toString(36)
+      .slice(2,7);
+
+}
+
+
+function daysBetween(a,b){
+
+  return Math.floor(
+
+    (
+      new Date(b+'T00:00:00')
+      -
+      new Date(a+'T00:00:00')
+
+    ) / 86400000
+
+  );
+
+}
+
+
+/* =====================================================
+   TARGET DATE
+===================================================== */
+
+function targetDate(item){
+
+  let d =
+    new Date(
+      item.date+'T00:00:00'
+    );
+
+  d.setDate(
+
+    d.getDate()
+    +
+    (
+      db.settings.targets[item.priority]
+      ??
+      7
+    )
+
+  );
+
+  return d
+    .toISOString()
+    .slice(0,10);
+
+}
+
+
+/* =====================================================
+   OVERDUE
+===================================================== */
+
+function isOverdue(x){
+
+  return (
+
+    x.status !== 'Closed'
+    &&
+    targetDate(x) < today()
+
+  );
+
+}
+
+
+/* =====================================================
+   BADGE PRIORITY
+===================================================== */
+
+function badgePriority(p){
+
+  return `
+
+    <span
+      class="badge ${p.toLowerCase()}">
+
+      ${p}
+
+    </span>
+
+  `;
+
+}
+
+
+/* =====================================================
+   BADGE STATUS
+===================================================== */
+
+function badgeStatus(s){
+
+  let c =
+    s === 'Closed'
+    ? 'closed'
+    :
+    s === 'On Progress'
+    ? 'progress'
+    :
+    'open';
+
+  return `
+
+    <span
+      class="badge ${c}">
+
+      ${s}
+
+    </span>
+
+  `;
+
+}
+
+
+/* =====================================================
+   STORE DROPDOWN
+===================================================== */
+
+function populateStores(){
+
+  [
+    'filterStore',
+    'fStore'
+
+  ].forEach(id=>{
+
+    let el = $(id);
+
+    if(!el) return;
+
+    let val = el.value;
+
+    let first =
+      id === 'filterStore'
+      ?
+      '<option value="">Semua Store</option>'
+      :
+      '';
+
+    el.innerHTML =
+      first
+      +
+      db.settings.stores
+        .map(
+          s =>
+          `<option>${esc(s)}</option>`
+        )
+        .join('');
+
+    if(val)
+      el.value = val;
+
+  });
+
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+function renderDashboard(){
+
+  let all =
+    db.findings;
+
+
+  let total =
+    all.length;
+
+
+  let closed =
+    all.filter(
+      x =>
+      x.status === 'Closed'
+    ).length;
+
+
+  let open =
+    all.filter(
+      x =>
+      x.status === 'Open'
+    ).length;
+
+
+  let prog =
+    all.filter(
+      x =>
+      x.status === 'On Progress'
+    ).length;
+
+
+  let over =
+    all.filter(
+      isOverdue
+    ).length;
+
+
+  $('kpis').innerHTML = [
+
+    [
+      '📋',
+      'Total Temuan',
+      total
+    ],
+
+    [
+      '🔴',
+      'Critical',
+      all.filter(
+        x =>
+        x.priority === 'Critical'
+        &&
+        x.status !== 'Closed'
+      ).length
+    ],
+
+    [
+      '⏳',
+      'Belum Selesai',
+      open + prog
+    ],
+
+    [
+      '⚠️',
+      'Overdue',
+      over
+    ]
+
+  ]
+
+  .map(x=>`
+
+    <div class="card kpi">
+
+      <div>
+
+        <div class="label">
+          ${x[1]}
+        </div>
+
+        <div class="value">
+          ${x[2]}
+        </div>
+
+      </div>
+
+      <div class="ico">
+        ${x[0]}
+      </div>
+
+    </div>
+
+  `)
+
+  .join('');
+
+
+  /* OVERALL */
+
+  let pct =
+    total
+    ?
+    Math.round(
+      closed / total * 100
+    )
+    :
+    0;
+
+
+  $('overallProgress').innerHTML = `
+
+    <div
+      style="
+      display:flex;
+      justify-content:space-between;
+      font-size:13px">
+
+      <b>
+        ${closed} dari ${total} temuan selesai
+      </b>
+
+      <b>
+        ${pct}%
+      </b>
+
+    </div>
+
+    <div class="progressbar">
+
+      <span
+        style="width:${pct}%">
+      </span>
+
+    </div>
+
+  `;
+
+
+  /* OVERDUE ALERT */
+
+  $('overdueAlert').innerHTML =
+    over
+
+    ?
+
+    `
+
+    <div class="alert">
+
+      ⚠️ Ada
+      <b>${over}</b>
+      temuan yang melewati target
+      penyelesaian.
+
+      Buka menu
+      <b>Prioritas</b>
+      untuk melihat daftar.
+
+    </div>
+
+    `
+
+    :
+
+    '';
+
+
+  /* STORE CARDS */
+
+  $('storeCards').innerHTML =
+    db.settings.stores
+
+    .map(store=>{
+
+      let a =
+        all.filter(
+          x =>
+          x.store === store
+        );
+
+
+      let c =
+        a.filter(
+          x =>
+          x.status === 'Closed'
+        ).length;
+
+
+      let o =
+        a.filter(
+          x =>
+          x.status !== 'Closed'
+        ).length;
+
+
+      let ov =
+        a.filter(
+          isOverdue
+        ).length;
+
+
+      let p =
+        a.filter(
+          x =>
+          x.priority === 'Critical'
+          &&
+          x.status !== 'Closed'
+        ).length;
+
+
+      let pc =
+        a.length
+        ?
+        Math.round(
+          c / a.length * 100
+        )
+        :
+        0;
+
+
+      return `
+
+      <div class="card store-card">
+
+        <h3>
+          🏪 ${esc(store)}
+        </h3>
+
+
+        <div class="store-stat">
+
+          <span>
+            Total Temuan
+          </span>
+
+          <span class="num">
+            ${a.length}
+          </span>
+
+        </div>
+
+
+        <div class="store-stat">
+
+          <span>
+            Critical aktif
+          </span>
+
+          <span
+            class="num"
+            style="color:#dc2626">
+
+            ${p}
+
+          </span>
+
+        </div>
+
+
+        <div class="store-stat">
+
+          <span>
+            Belum selesai
+          </span>
+
+          <span class="num">
+            ${o}
+          </span>
+
+        </div>
+
+
+        <div class="store-stat">
+
+          <span>
+            Overdue
+          </span>
+
+          <span
+            class="num"
+            style="color:#be185d">
+
+            ${ov}
+
+          </span>
+
+        </div>
+
+
+        <div
+          style="
+          margin-top:12px;
+          font-size:12px;
+          display:flex;
+          justify-content:space-between">
+
+          <b>
+            Progress
+          </b>
+
+          <b>
+            ${pc}%
+          </b>
+
+        </div>
+
+
+        <div class="progressbar">
+
+          <span
+            style="width:${pc}%">
+          </span>
+
+        </div>
+
+      </div>
+
+      `;
+
+    })
+
+    .join('');
+
+}
+
+
+/* =====================================================
+   FINDINGS
+===================================================== */
+
+function renderFindings(){
+
+  let st =
+    $('filterStore').value;
+
+  let pr =
+    $('filterPriority').value;
+
+  let ss =
+    $('filterStatus').value;
+
+  let q =
+    $('filterSearch')
+      .value
+      .toLowerCase();
+
+
+  let arr =
+    db.findings.filter(
+
+      x =>
+
+      (!st || x.store === st)
+
+      &&
+
+      (!pr || x.priority === pr)
+
+      &&
+
+      (!ss || x.status === ss)
+
+      &&
+
+      (
+        !q
+        ||
+        [
+          x.finding,
+          x.pic,
+          x.category,
+          x.action,
+          x.root
+        ]
+
+        .join(' ')
+        .toLowerCase()
+        .includes(q)
+      )
+
+    );
+
+
+  arr.sort(
+
+    (a,b) =>
+      new Date(
+        targetDate(a)
+      )
+      -
+      new Date(
+        targetDate(b)
+      )
+
+  );
+
+
+  $('findingTable').innerHTML =
+
+    arr.length
+
+    ?
+
+    arr.map(x=>`
+
+      <tr>
+
+
+        <td>
+
+          <div class="finding">
+
+            ${esc(x.finding)}
+
+          </div>
+
+
+          <div class="small">
+
+            ${esc(x.category || 'Tanpa kategori')}
+
+            •
+
+            ${x.date}
+
+          </div>
+
+        </td>
+
+
+        <td>
+
+          ${esc(x.store)}
+
+        </td>
+
+
+        <td>
+
+          ${badgePriority(x.priority)}
+
+        </td>
+
+
+        <td>
+
+          ${targetDate(x)}
+
+          ${
+
+            isOverdue(x)
+
+            ?
+
+            '<span class="badge overdue">Overdue</span>'
+
+            :
+
+            ''
+
+          }
+
+        </td>
+
+
+        <td>
+
+          ${esc(x.pic || '-')}
+
+        </td>
+
+
+        <td>
+
+          ${badgeStatus(x.status)}
+
+        </td>
+
+
+        <td>
+
+          <div class="actions">
+
+
+            <button
+              class="action-btn"
+              onclick="editFinding('${x.id}')">
+
+              Edit
+
+            </button>
+
+
+            ${
+              x.status !== 'Closed'
+
+              ?
+
+              `
+
+              <button
+                class="action-btn"
+                onclick="quickClose('${x.id}')">
+
+                ✓ Close
+
+              </button>
+
+              `
+
+              :
+
+              ''
+
+            }
+
+
+            <button
+              class="action-btn delete"
+              onclick="deleteFinding('${x.id}')">
+
+              Hapus
+
+            </button>
+
+
+          </div>
+
+        </td>
+
+
+      </tr>
+
+    `)
+
+    .join('')
+
+    :
+
+    `
+
+    <tr>
+
+      <td colspan="7">
+
+        <div class="empty">
+
+          Belum ada temuan.
+
+        </div>
+
+      </td>
+
+    </tr>
+
+    `;
+
+}
+
+
+/* =====================================================
+   PRIORITY
+===================================================== */
+
+function renderPriority(){
+
+  let stores =
+    [
+      '',
+      ...db.settings.stores
+    ];
+
+
+  $('priorityStores').innerHTML =
+
+    stores
+
+    .map(s=>`
+
+      <button
+
+        class="${priorityStore === s ? 'active' : ''}"
+
+        onclick="
+
+          priorityStore='${esc(s).replace(/'/g,"\\'")}';
+
+          renderPriority();
+
+        ">
+
+        ${s || 'Semua Store'}
+
+      </button>
+
+    `)
+
+    .join('');
+
+
+  let arr =
+    db.findings.filter(
+
+      x =>
+      !priorityStore
+      ||
+      x.store === priorityStore
+
+    );
+
+
+  const rank = {
+
+    Critical:1,
+
+    High:2,
+
+    Medium:3,
+
+    Low:4
+
+  };
+
+
+  arr.sort(
+
+    (a,b)=>{
+
+      return (
+
+        rank[a.priority]
+        -
+        rank[b.priority]
+
+      )
+
+      ||
+
+      (
+        (isOverdue(b)?1:0)
+        -
+        (isOverdue(a)?1:0)
+      )
+
+      ||
+
+      (
+        new Date(
+          targetDate(a)
+        )
+        -
+        new Date(
+          targetDate(b)
+        )
+      );
+
+    }
+
+  );
+
+
+  $('priorityTable').innerHTML =
+
+    arr.length
+
+    ?
+
+    arr.map(
+
+      (x,i)=>{
+
+        let days =
+          daysBetween(
+            today(),
+            targetDate(x)
+          );
+
+
+        return `
+
+        <tr>
+
+
+          <td>
+
+            <b>
+              ${i+1}
+            </b>
+
+          </td>
+
+
+          <td>
+
+            <div class="finding">
+
+              ${esc(x.finding)}
+
+            </div>
+
+            <div class="small">
+
+              ${esc(x.category || '')}
+
+            </div>
+
+          </td>
+
+
+          <td>
+
+            ${esc(x.store)}
+
+          </td>
+
+
+          <td>
+
+            ${badgePriority(x.priority)}
+
+          </td>
+
+
+          <td>
+
+            ${targetDate(x)}
+
+          </td>
+
+
+          <td
+            style="
+            font-weight:800;
+            color:${days<0?'#dc2626':'inherit'}">
+
+            ${
+              days < 0
+
+              ?
+
+              Math.abs(days)
+              +
+              ' hari terlambat'
+
+              :
+
+              days
+              +
+              ' hari lagi'
+
+            }
+
+          </td>
+
+
+          <td>
+
+            ${badgeStatus(x.status)}
+
+          </td>
+
+
+          <td>
+
+            <button
+              class="action-btn"
+              onclick="editFinding('${x.id}')">
+
+              Edit
+
+            </button>
+
+          </td>
+
+
+        </tr>
+
+        `;
+
+      }
+
+    )
+
+    .join('')
+
+    :
+
+    `
+
+    <tr>
+
+      <td colspan="8">
+
+        <div class="empty">
+
+          Belum ada data prioritas.
+
+        </div>
+
+      </td>
+
+    </tr>
+
+    `;
+
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function openModal(id=''){
+
+  $('editId').value =
+    id;
+
+
+  $('modalTitle').textContent =
+    id
+    ?
+    'Edit Temuan'
+    :
+    'Tambah Temuan';
+
+
+  $('fDate').value =
+    today();
+
+
+  $('fFinding').value =
+    '';
+
+
+  $('fCategory').value =
+    '';
+
+
+  $('fPriority').value =
+    'Medium';
+
+
+  $('fPic').value =
+    '';
+
+
+  $('fStatus').value =
+    'Open';
+
+
+  $('fRoot').value =
+    '';
+
+
+  $('fAction').value =
+    '';
+
+
+  $('fClosed').value =
+    '';
+
+
+  $('fNote').value =
+    '';
+
+
+  if(id){
+
+    let x =
+      db.findings.find(
+        v =>
+        v.id === id
+      );
+
+
+    if(!x)
+      return;
+
+
+    $('fStore').value =
+      x.store;
+
+
+    $('fDate').value =
+      x.date;
+
+
+    $('fFinding').value =
+      x.finding;
+
+
+    $('fCategory').value =
+      x.category || '';
+
+
+    $('fPriority').value =
+      x.priority;
+
+
+    $('fPic').value =
+      x.pic || '';
+
+
+    $('fStatus').value =
+      x.status;
+
+
+    $('fRoot').value =
+      x.root || '';
+
+
+    $('fAction').value =
+      x.action || '';
+
+
+    $('fClosed').value =
+      x.closed || '';
+
+
+    $('fNote').value =
+      x.note || '';
+
+  }
+
+  else{
+
+    $('fStore').value =
+      db.settings.stores[0];
+
+  }
+
+
+  $('modal')
+    .classList
+    .add('show');
+
+}
+
+
+function closeModal(){
+
+  $('modal')
+    .classList
+    .remove('show');
+
+}
+
+
+/* =====================================================
+   SAVE FINDING
+===================================================== */
+
+function saveFinding(e){
+
+  e.preventDefault();
+
+
+  let id =
+    $('editId').value;
+
+
+  let x = {
+
+    id:
+      id || uid(),
+
+    store:
+      $('fStore').value,
+
+    date:
+      $('fDate').value,
+
+    finding:
+      $('fFinding').value.trim(),
+
+    category:
+      $('fCategory').value.trim(),
+
+    priority:
+      $('fPriority').value,
+
+    pic:
+      $('fPic').value.trim(),
+
+    status:
+      $('fStatus').value,
+
+    root:
+      $('fRoot').value.trim(),
+
+    action:
+      $('fAction').value.trim(),
+
+    closed:
+      $('fClosed').value,
+
+    note:
+      $('fNote').value.trim()
+
+  };
+
+
+  if(
+
+    x.status === 'Closed'
+    &&
+    !x.closed
+
+  ){
+
+    x.closed =
+      today();
+
+  }
+
+
+  if(id){
+
+    let i =
+      db.findings.findIndex(
+        v =>
+        v.id === id
+      );
+
+
+    db.findings[i] =
+      x;
+
+  }
+
+  else{
+
+    db.findings.push(x);
+
+  }
+
+
+  saveDB();
+
+  closeModal();
+
+}
+
+
+/* =====================================================
+   EDIT
+===================================================== */
+
+function editFinding(id){
+
+  openModal(id);
+
+}
+
+
+/* =====================================================
+   QUICK CLOSE
+===================================================== */
+
+function quickClose(id){
+
+  let x =
+    db.findings.find(
+      v =>
+      v.id === id
+    );
+
+
+  if(x){
+
+    x.status =
+      'Closed';
+
+
+    x.closed =
+      today();
+
+
+    saveDB();
+
+  }
+
+}
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+function deleteFinding(id){
+
+  if(
+
+    confirm(
+      'Hapus temuan ini?'
+    )
+
+  ){
+
+    db.findings =
+      db.findings.filter(
+        x =>
+        x.id !== id
+      );
+
+
+    saveDB();
+
+  }
+
+}
+
+
+/* =====================================================
+   SETTING
+===================================================== */
+
+function saveSettings(){
+
+  db.settings.stores = [
+
+    $('s1').value.trim()
+      ||
+      'SSS MENTENG',
+
+    $('s2').value.trim()
+      ||
+      'SKS CITYWALK',
+
+    $('s3').value.trim()
+      ||
+      'SS CITRA TOWER'
+
+  ];
+
+
+  db.settings.targets = {
+
+    Critical:
+      +$('tCritical').value
+      || 0,
+
+    High:
+      +$('tHigh').value
+      || 0,
+
+    Medium:
+      +$('tMedium').value
+      || 0,
+
+    Low:
+      +$('tLow').value
+      || 0
+
+  };
+
+
+  saveDB();
+
+  populateStores();
+
+  alert(
+    'Setting berhasil disimpan.'
+  );
+
+}
+
+
+/* =====================================================
+   LOAD SETTINGS
+===================================================== */
+
+function loadSettings(){
+
+  $('s1').value =
+    db.settings.stores[0];
+
+
+  $('s2').value =
+    db.settings.stores[1];
+
+
+  $('s3').value =
+    db.settings.stores[2];
+
+
+  $('tCritical').value =
+    db.settings.targets.Critical;
+
+
+  $('tHigh').value =
+    db.settings.targets.High;
+
+
+  $('tMedium').value =
+    db.settings.targets.Medium;
+
+
+  $('tLow').value =
+    db.settings.targets.Low;
+
+}
+
+
+/* =====================================================
+   EXPORT
+===================================================== */
+
+function exportData(){
+
+  let blob =
+    new Blob(
+
+      [
+        JSON.stringify(
+          db,
+          null,
+          2
+        )
+      ],
+
+      {
+        type:
+        'application/json'
+      }
+
+    );
+
+
+  let a =
+    document.createElement('a');
+
+
+  a.href =
+    URL.createObjectURL(
+      blob
+    );
+
+
+  a.download =
+    'backup-raport-3-store-'
+    +
+    today()
+    +
+    '.json';
+
+
+  a.click();
+
+
+  URL.revokeObjectURL(
+    a.href
+  );
+
+}
+
+
+/* =====================================================
+   IMPORT
+===================================================== */
+
+function importData(e){
+
+  let f =
+    e.target.files[0];
+
+
+  if(!f)
+    return;
+
+
+  let r =
+    new FileReader();
+
+
+  r.onload = ()=>{
+
+    try{
+
+      let d =
+        JSON.parse(
+          r.result
+        );
+
+
+      if(
+        !d.settings
+        ||
+        !Array.isArray(
+          d.findings
+        )
+      ){
+
+        throw Error();
+
+      }
+
+
+      db =
+        d;
+
+
+      saveDB();
+
+      populateStores();
+
+      loadSettings();
+
+
+      alert(
+        'Data berhasil dipulihkan.'
+      );
+
+    }
+
+    catch(err){
+
+      alert(
+        'File backup tidak valid.'
+      );
+
+    }
+
+  };
+
+
+  r.readAsText(f);
+
+
+  e.target.value =
+    '';
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+function resetAll(){
+
+  if(
+
+    confirm(
+      'PERINGATAN: semua temuan akan dihapus. Lanjutkan?'
+    )
+
+  ){
+
+    db.findings =
+      [];
+
+    saveDB();
+
+  }
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+document
+  .querySelectorAll('.nav button')
+  .forEach(
+
+    b=>{
+
+      b.onclick = ()=>{
+
+        document
+          .querySelectorAll(
+            '.nav button'
+          )
+          .forEach(
+            x =>
+            x.classList.remove(
+              'active'
+            )
+          );
+
+
+        document
+          .querySelectorAll(
+            '.section'
+          )
+          .forEach(
+            x =>
+            x.classList.remove(
+              'active'
+            )
+          );
+
+
+        b.classList.add(
+          'active'
+        );
+
+
+        $(
+          b.dataset.tab
+        )
+        .classList
+        .add('active');
+
+
+        renderAll();
+
+      };
+
+    }
+
+  );
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+$('modal')
+  .addEventListener(
+    'click',
+    e=>{
+
+      if(
+        e.target.id === 'modal'
+      ){
+
+        closeModal();
+
+      }
+
+    }
+  );
+
+
+/* =====================================================
+   RENDER ALL
+===================================================== */
+
+function renderAll(){
+
+  renderDashboard();
+
+  renderFindings();
+
+  renderPriority();
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+populateStores();
+
+loadSettings();
+
+renderAll();
+
+</script>
+
+</body>
+</html>
